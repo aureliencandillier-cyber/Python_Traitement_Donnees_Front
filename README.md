@@ -1,4 +1,4 @@
-# 🎟️ Système de Gestion de Tickets – Projet Fullstack Python / React
+# Système de Gestion de Tickets – Projet Fullstack Python / React
 
 Ce projet est une application **fullstack de gestion de tickets** développée dans un cadre pédagogique.  
 Il combine **traitement de données en Python**, **API REST avec FastAPI**, **frontend React**, et une **démarche réflexive d’apprentissage via l’usage d’un LLM**.
@@ -11,7 +11,7 @@ L’objectif est de démontrer :
 
 ---
 
-## 🧠 Contexte pédagogique
+## Contexte pédagogique
 
 Projet réalisé dans le cadre d’un exercice de formation visant à :
 - automatiser un traitement simple de données en Python,
@@ -23,7 +23,7 @@ Travail réalisé en binôme (un développeur / un guide), avec alternance des r
 
 ---
 
-## 🏗️ Architecture globale
+## Architecture globale
 
 L’application repose sur une architecture **découplée** :
 
@@ -39,7 +39,7 @@ L’application repose sur une architecture **découplée** :
 
 ---
 
-## 📂 Structure du projet
+## Structure du projet
 
 ```plaintext
 .
@@ -61,7 +61,7 @@ L’application repose sur une architecture **découplée** :
 ├── README.md                  # Documentation globale (ce fichier)
 └── LEARNING.md                # Apprentissage, usage du LLM et retours critiques
 
-⚙️ Prérequis
+ Prérequis
 
     Python ≥ 3.10
 
@@ -69,26 +69,26 @@ L’application repose sur une architecture **découplée** :
 
     npm ≥ 9
 
-🚀 Installation et Lancement
-1️⃣ Backend (API FastAPI)
+ Installation et Lancement
+1️ Backend (API FastAPI)
 
 cd Backend
 pip install fastapi uvicorn pydantic
 python -m uvicorn main:app --reload
 
 Le serveur backend est accessible sur :
-👉 http://127.0.0.1:8000
+ http://127.0.0.1:8000
 
-👉 Documentation interactive Swagger : http://127.0.0.1:8000/docs
-2️⃣ Frontend (React)
+ Documentation interactive Swagger : http://127.0.0.1:8000/docs
+2 Frontend (React)
 
 cd Frontend
 npm install
 npm run dev
 
 L’interface utilisateur est accessible sur :
-👉 http://localhost:5173
-📡 API REST – Endpoints principaux
+ http://localhost:5173
+ API REST – Endpoints principaux
 Méthode	Route	Description
 GET	/tickets	Récupère tous les tickets
 POST	/tickets	Crée un nouveau ticket
@@ -96,7 +96,7 @@ PATCH	/tickets/{id}	Met à jour le statut d’un ticket
 DELETE	/tickets/{id}	Supprime (ou solde) un ticket
 
 La gestion des erreurs HTTP (404, 400, etc.) est implémentée côté backend.
-🖥️ Fonctionnalités principales
+ Fonctionnalités principales
 Backend
 
     Lecture et écriture d’un fichier JSON
@@ -123,17 +123,17 @@ Frontend
 
     Règles UI empêchant la réouverture d’un ticket clos
 
-📘 Documentation technique détaillée
+ Documentation technique détaillée
 
 Pour une description complète et approfondie de chaque composant :
 
-    🔧 Backend (FastAPI, logique métier, CLI)
+     Backend (FastAPI, logique métier, CLI)
     → voir Backend/README.md
 
-    🎨 Frontend (React, règles métier UI, tri, filtres)
+     Frontend (React, règles métier UI, tri, filtres)
     → voir Frontend/README.md
 
-🤖 Apprentissage & usage du LLM
+ Apprentissage & usage du LLM
 
 Un LLM a été utilisé comme outil d’assistance au développement pour :
 
@@ -145,23 +145,4 @@ Un LLM a été utilisé comme outil d’assistance au développement pour :
 
 L’ensemble de la démarche (prompts utilisés, erreurs rencontrées, vérifications, cas d’erreur du LLM) est documenté dans :
 
-👉 LEARNING.md
-🧪 Critères de validation couverts
-
-    API fonctionnelle et accessible
-
-    Frontend connecté au backend
-
-    Création, mise à jour et suppression de tickets
-
-    Code structuré et lisible
-
-    Documentation complète
-
-    Utilisation justifiée et critique d’un LLM
-
-    Utilisation cohérente de Git
-
-📄 Licence
-
-Projet réalisé dans un cadre pédagogique.
+ LEARNING.md
