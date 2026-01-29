@@ -37,22 +37,42 @@
   gap: 30px;
 }
 
+/* ✅ AJOUT : sidebar “outil” (pas trop large) */
 .sidebar {
-  flex: 1;
-  max-width: 300px;
+  flex: 0 0 260px;
+  max-width: 260px;
 }
 
+/* ✅ AJOUT : sur écrans moyens/petits, on empile (UX bien meilleure) */
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    flex: 0 0 auto;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+.sidebar h2 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+/* ✅ CORRECTION : la zone tickets prend le reste */
 .ticket-display {
-  flex: 3;
+  flex: 1;
 }
 
 /* Forms & Controls */
 .form-container, .controls {
   background: var(--card-bg);
-  padding: 20px;
+  padding: 16px;              /* un peu plus compact */
   border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 14px;        /* réduit l’empilement */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 input, textarea, select {
@@ -74,13 +94,20 @@ input, textarea, select {
   border-radius: 5px;
 }
 
+/* ✅ Bouton danger “outline” (moins dominant, plus pro) */
 .btn-danger {
-  background: var(--danger);
-  color: white;
-  border: none;
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
+  font-weight: bold;
+}
+
+.btn-danger:hover {
+  background: var(--danger);
+  color: white;
 }
 
 /* Ticket Grid & Cards */
@@ -250,7 +277,7 @@ input, textarea, select {
   height: var(--control-height);
 }
 
-/* IMPORTANT anti-débordement : autorise les selects à vraiment rétrécir en flex */
+/* anti-débordement : autorise les selects à vraiment rétrécir en flex */
 .filter-builder select,
 .filter-builder input {
   width: auto;     /* override du width:100% global */
@@ -296,7 +323,7 @@ input, textarea, select {
   margin-top: 15px;
 }
 
-/* ✅ Mobile : on empile pour confort et éviter toute compression */
+/* Mobile : on empile le builder pour confort */
 @media (max-width: 420px) {
   .filter-builder {
     flex-direction: column;
@@ -314,3 +341,79 @@ input, textarea, select {
     flex: 0 0 auto;
   }
 }
+
+/* Harmonisation titres */
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+h3 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* -------------------------------------------------
+   ALIGNEMENT DES ACTIONS DANS LES CARTES
+------------------------------------------------- */
+
+.card-actions select,
+.card-actions .btn-danger,
+.card-actions .btn-solder {
+  height: var(--control-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ajustement spécifique pour les selects (évite qu'ils débordent) */
+.card-actions select {
+  padding: 0 10px;
+}
+
+/* Ajustement spécifique pour les boutons */
+.card-actions .btn-danger,
+.card-actions .btn-solder {
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------
+   ALIGNEMENT PRO DES ACTIONS DANS LES CARTES
+------------------------------------------------- */
+
+.card-actions {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* équilibre visuel */
+  gap: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+
+/* Le select de statut : largeur maîtrisée */
+.card-actions select {
+  height: var(--control-height);
+  width: 120px;          /* largeur fixe et lisible */
+  padding: 0 10px;
+  flex: 0 0 120px;
+}
+
+/* Boutons d’action */
+.card-actions .btn-danger,
+.card-actions .btn-solder {
+  height: var(--control-height);
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
