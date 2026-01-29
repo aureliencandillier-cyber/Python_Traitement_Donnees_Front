@@ -1,148 +1,66 @@
-# Système de Gestion de Tickets – Projet Fullstack Python / React
+🎟️ Ticketing System - Frontend
+🚀 Présentation
 
-Ce projet est une application **fullstack de gestion de tickets** développée dans un cadre pédagogique.  
-Il combine **traitement de données en Python**, **API REST avec FastAPI**, **frontend React**, et une **démarche réflexive d’apprentissage via l’usage d’un LLM**.
+Ce dépôt contient l'interface utilisateur (UI) du système de gestion de tickets. Développée avec React et Vite, cette application offre un tableau de bord moderne, fluide et réactif pour piloter les demandes de support technique en temps réel.
+🛠️ Technologies utilisées
 
-L’objectif est de démontrer :
-- la manipulation de données structurées (JSON),
-- la conception d’une API REST fonctionnelle,
-- la connexion frontend ↔ backend,
-- et l’adoption de bonnes pratiques professionnelles (Git, documentation, esprit critique).
+    React 18 : Utilisation intensive des Hooks (useState, useEffect) pour une gestion d'état performante.
 
----
+    Vite : Environnement de développement et outil de build ultra-rapide.
 
-## Contexte pédagogique
+    CSS3 Moderne : Architecture basée sur les variables CSS, Flexbox et CSS Grid pour un design cohérent.
 
-Projet réalisé dans le cadre d’un exercice de formation visant à :
-- automatiser un traitement simple de données en Python,
-- créer une API REST avec FastAPI,
-- connecter une interface frontend (React),
-- utiliser un LLM comme **outil d’assistance au développement**, avec analyse critique.
+    Fetch API : Communication asynchrone avec le backend FastAPI.
 
-Travail réalisé en binôme (un développeur / un guide), avec alternance des rôles.
+✨ Fonctionnalités Avancées
 
----
+    Système de Filtrage Cumulatif : Permet d'empiler plusieurs critères de recherche (ex: voir uniquement les tickets "High" ET "Open").
 
-## Architecture globale
+    Recherche Textuelle : Filtre dynamique sur la description des tickets pour retrouver rapidement un mot-clé (ex: "Ordinateur").
 
-L’application repose sur une architecture **découplée** :
+    Tri Bidirectionnel : Possibilité de trier par ID, Titre, Priorité ou Statut, avec une bascule entre l'ordre Croissant (↑) et Décroissant (↓).
 
-- **Backend** : API REST FastAPI  
-  - Gestion des tickets
-  - Validation des données
-  - Persistance via fichier JSON
-- **Frontend** : Application React (Vite)  
-  - Affichage dynamique des tickets
-  - Création et mise à jour du statut
-  - Règles métier côté interface
-- **Communication** : API REST (fetch HTTP)
+    Tableau de bord Statistique : Calcul automatique et affichage des tickets par état (Open, In Progress, Closed).
 
----
+    Gestion du cycle de vie :
 
-## Structure du projet
+        Verrouillage "Closed" : Les tickets clos ne peuvent plus être modifiés (sélecteur désactivé).
 
-```plaintext
-.
-├── Backend/
-│   ├── main.py                # API FastAPI (routes, CORS, validation)
-│   ├── script.py              # Traitement de données & logique métier
-│   ├── structure_ticket.json  # Données persistées (≥ 10 tickets)
-│   └── README.md              # Documentation technique backend
-│
-├── Frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   └── README.md              # Documentation technique frontend
-│
-├── README.md                  # Documentation globale (ce fichier)
-└── LEARNING.md                # Apprentissage, usage du LLM et retours critiques
+        Action "SOLDER" : Le bouton de suppression change sémantiquement pour marquer la clôture définitive d'un dossier.
 
- Prérequis
+📦 Installation et Lancement
 
-    Python ≥ 3.10
+    Cloner le dépôt :
+    PowerShell
 
-    Node.js ≥ 18
+    git clone https://github.com/aureliencandillier-cyber/Python_Traitement_Donnees_Front.git
+    cd Python_Traitement_Donnees_Front
 
-    npm ≥ 9
+    Installer les dépendances :
+    PowerShell
 
- Installation et Lancement
-1️ Backend (API FastAPI)
+    npm install
 
-cd Backend
-pip install fastapi uvicorn pydantic
-python -m uvicorn main:app --reload
+    Lancer le serveur de développement :
+    PowerShell
 
-Le serveur backend est accessible sur :
- http://127.0.0.1:8000
+    npm run dev
 
- Documentation interactive Swagger : http://127.0.0.1:8000/docs
-2 Frontend (React)
+    L'interface sera accessible par défaut sur http://localhost:5173/.
 
-cd Frontend
-npm install
-npm run dev
+📋 Configuration de l'API
 
-L’interface utilisateur est accessible sur :
- http://localhost:5173
- API REST – Endpoints principaux
-Méthode	Route	Description
-GET	/tickets	Récupère tous les tickets
-POST	/tickets	Crée un nouveau ticket
-PATCH	/tickets/{id}	Met à jour le statut d’un ticket
-DELETE	/tickets/{id}	Supprime (ou solde) un ticket
+Le Frontend est configuré pour interagir avec un backend FastAPI tournant sur le port 8000.
 
-La gestion des erreurs HTTP (404, 400, etc.) est implémentée côté backend.
- Fonctionnalités principales
-Backend
+    URL de base : http://127.0.0.1:8000/tickets
 
-    Lecture et écriture d’un fichier JSON
+    Endpoints utilisés : GET, POST, PATCH (mise à jour statut), DELETE.
 
-    Calcul de statistiques par statut
+📂 Structure des fichiers
+Plaintext
 
-    Filtrage et tri des tickets
-
-    Ajout et mise à jour de tickets
-
-    Mode API + mode CLI (script.py)
-
-Frontend
-
-    Affichage dynamique des tickets
-
-    Création via formulaire
-
-    Mise à jour du statut
-
-    Filtrage et recherche multicritère
-
-    Tri métier (priorité et statut)
-
-    Règles UI empêchant la réouverture d’un ticket clos
-
- Documentation technique détaillée
-
-Pour une description complète et approfondie de chaque composant :
-
-     Backend (FastAPI, logique métier, CLI)
-    → voir Backend/README.md
-
-     Frontend (React, règles métier UI, tri, filtres)
-    → voir Frontend/README.md
-
- Apprentissage & usage du LLM
-
-Un LLM a été utilisé comme outil d’assistance au développement pour :
-
-    générer des données de test,
-
-    clarifier des comportements techniques,
-
-    identifier et corriger des erreurs.
-
-L’ensemble de la démarche (prompts utilisés, erreurs rencontrées, vérifications, cas d’erreur du LLM) est documenté dans :
-
- LEARNING.md
+src/
+├── App.jsx     # Logique métier, gestion des filtres cumulatifs et du tri
+├── App.css     # Styles des composants, animations et grille responsive
+├── main.jsx    # Point d'entrée de l'application React
+└── index.css   # Styles globaux et variables de thème
