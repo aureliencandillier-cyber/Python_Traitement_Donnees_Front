@@ -3,13 +3,19 @@ import './App.css';
 
 function App() {
   const [tickets, setTickets] = useState([]);
-  // État pour la sélection actuelle dans les menus de filtre
+  
+  // États pour le filtrage
   const [tempFilter, setTempFilter] = useState({ criterion: 'status', value: 'Open' });
-  // Liste cumulée des filtres actifs
   const [activeFilters, setActiveFilters] = useState([]);
+  
+  // États pour le tri
   const [sortKey, setSortKey] = useState('id');
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' ou 'desc'
+
+  // État pour le formulaire
   const [formData, setFormData] = useState({ title: '', description: '', priority: 'Low' });
 
+  // Référentiels de poids pour le tri logique
   const priorityWeights = { 'High': 1, 'Medium': 2, 'Low': 3 };
   const statusWeights = { 'Open': 1, 'In progress': 2, 'Closed': 3 };
 
@@ -27,38 +33,33 @@ function App() {
     }
   };
 
-  // --- GESTION DES FILTRES ---
+  // --- LOGIQUE DES FILTRES ---
 
-  // Quand on change le type de critère (ex: passer de Status à Description)
   const handleCriterionChange = (e) => {
     const newCriterion = e.target.value;
     let defaultValue = '';
-    // On réinitialise la valeur par défaut pour éviter des incohérences
     if (newCriterion === 'status') defaultValue = 'Open';
     else if (newCriterion === 'priority') defaultValue = 'Low';
-    // else description, defaultValue reste vide
-
     setTempFilter({ criterion: newCriterion, value: defaultValue });
   };
 
-  // Ajouter le filtre courant à la liste
   const addFilter = () => {
-    if (tempFilter.value.trim() === '') return; // Ne pas ajouter de filtre vide
-
-    // Éviter les doublons exacts
-    const isDuplicate = activeFilters.some(f => f.criterion === tempFilter.criterion && f.value.toLowerCase() === tempFilter.value.toLowerCase());
+    if (tempFilter.value.trim() === '') return;
+    const isDuplicate = activeFilters.some(f => 
+      f.criterion === tempFilter.criterion && 
+      f.value.toLowerCase() === tempFilter.value.toLowerCase()
+    );
     if (!isDuplicate) {
       setActiveFilters([...activeFilters, { ...tempFilter }]);
-      // Reset description field after adding if that was selected
       if (tempFilter.criterion === 'description') {
-          setTempFilter({ ...tempFilter, value: '' });
+        setTempFilter({ ...tempFilter, value: '' });
       }
     }
   };
 
   const clearFilters = () => setActiveFilters([]);
 
-  // --- GESTION DU FORMULAIRE ET ACTIONS ---
+  // --- ACTIONS API ---
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,28 +89,30 @@ function App() {
     if (response.ok) setTickets(tickets.filter(t => t.id !== id));
   };
 
-  // --- LOGIQUE DE FILTRAGE ET TRI ---
+  // --- LOGIQUE DE TRAITEMENT DES DONNÉES (FILTRE + TRI) ---
+
   const displayedTickets = tickets
     .filter(t => {
       if (activeFilters.length === 0) return true;
-      // Le ticket doit correspondre à TOUS les filtres actifs (Logique AND)
       return activeFilters.every(f => {
-        const ticketValue = String(t[f.criterion]).toLowerCase();
+        const ticketValue = String(t[f.criterion] || "").toLowerCase();
         const filterValue = f.value.toLowerCase();
-
-        // Si c'est une description, on cherche si ça CONTIENT le mot
-        if (f.criterion === 'description') {
-            return ticketValue.includes(filterValue);
-        }
-        // Sinon (Statut, Priorité), on cherche une correspondance EXACTE
+        if (f.criterion === 'description') return ticketValue.includes(filterValue);
         return ticketValue === filterValue;
       });
     })
     .sort((a, b) => {
-      if (sortKey === 'priority') return priorityWeights[a.priority] - priorityWeights[b.priority];
-      if (sortKey === 'status') return (statusWeights[a.status] || 99) - (statusWeights[b.status] || 99);
-      if (sortKey === 'id') return a.id - b.id;
-      return String(a[sortKey]).localeCompare(String(b[sortKey]));
+      let comparison = 0;
+      if (sortKey === 'priority') {
+        comparison = priorityWeights[a.priority] - priorityWeights[b.priority];
+      } else if (sortKey === 'status') {
+        comparison = (statusWeights[a.status] || 99) - (statusWeights[b.status] || 99);
+      } else if (sortKey === 'id') {
+        comparison = a.id - b.id;
+      } else {
+        comparison = String(a[sortKey]).localeCompare(String(b[sortKey]));
+      }
+      return sortOrder === 'asc' ? comparison : -comparison;
     });
 
   return (
@@ -121,9 +124,22 @@ function App() {
           <section className="form-container">
             <h2>➕ Nouveau Ticket</h2>
             <form onSubmit={handleSubmit}>
-              <input name="title" placeholder="Titre" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} required />
-              <textarea name="description" placeholder="Description" value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} required />
-              <select value={formData.priority} onChange={(e) => setFormData({...formData, priority: e.target.value})}>
+              <input 
+                placeholder="Titre" 
+                value={formData.title} 
+                onChange={(e) => setFormData({...formData, title: e.target.value})} 
+                required 
+              />
+              <textarea 
+                placeholder="Description" 
+                value={formData.description} 
+                onChange={(e) => setFormData({...formData, description: e.target.value})} 
+                required 
+              />
+              <select 
+                value={formData.priority} 
+                onChange={(e) => setFormData({...formData, priority: e.target.value})}
+              >
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
@@ -135,61 +151,61 @@ function App() {
           <section className="controls">
             <h2>🔍 Ajouter un filtre</h2>
             <div className="filter-builder">
-              {/* 1. Choix du critère */}
               <select value={tempFilter.criterion} onChange={handleCriterionChange}>
                 <option value="status">Statut</option>
                 <option value="priority">Priorité</option>
-                {/* Nouvel ajout : */}
                 <option value="description">Description</option>
               </select>
               
-              {/* 2. Choix de la valeur (Interface dynamique) */}
               {tempFilter.criterion === 'description' ? (
-                  // Si Description : Afficher un champ texte
-                  <input 
-                    type="text" 
-                    placeholder="Contient le mot..."
-                    value={tempFilter.value}
-                    onChange={(e) => setTempFilter({ ...tempFilter, value: e.target.value })}
-                  />
+                <input 
+                  type="text" 
+                  placeholder="Contient..."
+                  value={tempFilter.value}
+                  onChange={(e) => setTempFilter({ ...tempFilter, value: e.target.value })}
+                />
               ) : (
-                  // Sinon (Statut/Priorité) : Afficher le menu déroulant approprié
-                  <select value={tempFilter.value} onChange={(e) => setTempFilter({ ...tempFilter, value: e.target.value })}>
-                    {tempFilter.criterion === 'status' ? (
-                      <>
-                        <option value="Open">Open</option>
-                        <option value="In progress">In progress</option>
-                        <option value="Closed">Closed</option>
-                      </>
-                    ) : (
-                      <>
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                      </>
-                    )}
-                  </select>
+                <select value={tempFilter.value} onChange={(e) => setTempFilter({ ...tempFilter, value: e.target.value })}>
+                  {tempFilter.criterion === 'status' ? (
+                    <>
+                      <option value="Open">Open</option>
+                      <option value="In progress">In progress</option>
+                      <option value="Closed">Closed</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                    </>
+                  )}
+                </select>
               )}
-
               <button onClick={addFilter} className="btn-add-filter" disabled={!tempFilter.value}>＋</button>
             </div>
 
             <div className="sort-box">
               <label>Trier par :</label>
-              <select value={sortKey} onChange={(e) => setSortKey(e.target.value)}>
-                <option value="id">ID</option>
-                <option value="priority">Priorité</option>
-                <option value="status">Statut</option>
-              </select>
+              <div className="sort-controls">
+                <select value={sortKey} onChange={(e) => setSortKey(e.target.value)}>
+                  <option value="id">ID</option>
+                  <option value="priority">Priorité</option>
+                  <option value="status">Statut</option>
+                  <option value="title">Titre</option>
+                </select>
+                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                  <option value="asc">Croissant (↑)</option>
+                  <option value="desc">Décroissant (↓)</option>
+                </select>
+              </div>
             </div>
           </section>
 
-          {/* LISTE DES FILTRES ACTIFS (En bas à gauche) */}
           <section className="active-filters-area">
             <div className="active-filters-header">
               <h3>Filtres actifs</h3>
               {activeFilters.length > 0 && (
-                 <button onClick={clearFilters} className="btn-broom" title="Vider les filtres">🧹</button>
+                <button onClick={clearFilters} className="btn-broom">🧹</button>
               )}
             </div>
             <div className="filter-tags-list">
