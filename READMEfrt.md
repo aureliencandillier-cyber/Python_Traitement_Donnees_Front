@@ -1,7 +1,7 @@
-🎟️ Ticketing System - Frontend
+# Ticketing System - Frontend
 
 Cette interface moderne développée avec React et Vite constitue le "visage" de ton application de gestion de tickets. Elle communique avec une API FastAPI pour offrir une gestion fluide et en temps réel des demandes de support.
-🚀 Technologies utilisées
+Technologies utilisées
 
     Framework : React (Hooks : useState, useEffect)
 
@@ -11,7 +11,7 @@ Cette interface moderne développée avec React et Vite constitue le "visage" de
 
     Communication : API Fetch (Requêtes asynchrones vers le backend)
 
-✨ Fonctionnalités clés
+## Fonctionnalités clés
 
     Tableau de bord de Statistiques : Visualisation immédiate du nombre total de tickets et répartition par statut (Open, In Progress, Closed).
 
@@ -23,7 +23,7 @@ Cette interface moderne développée avec React et Vite constitue le "visage" de
 
     Gestion du cycle de vie : Mise à jour instantanée du statut via des requêtes PATCH.
 
-🛠️ Installation et Lancement
+## Installation et Lancement
 
     Accéder au dossier :
     PowerShell
@@ -42,7 +42,7 @@ Cette interface moderne développée avec React et Vite constitue le "visage" de
 
     L'interface sera accessible par défaut sur http://localhost:5173.
 
-📋 Règles Métier Implémentées
+## Règles Métier Implémentées
 
 Le frontend applique des contrôles stricts pour garantir l'intégrité des données :
 
@@ -52,7 +52,7 @@ Le frontend applique des contrôles stricts pour garantir l'intégrité des donn
 
     Hiérarchie visuelle : Les cartes de tickets utilisent des codes couleurs basés sur la priorité et le statut pour une lecture rapide.
 
-📂 Structure du projet
+## Structure du projet
 Plaintext
 
 Frontend/
