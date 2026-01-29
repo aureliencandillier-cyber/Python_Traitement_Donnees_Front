@@ -1,69 +1,167 @@
-# Ticketing System - Frontend
+# 🎟️ Système de Gestion de Tickets – Projet Fullstack Python / React
 
-Cette interface moderne développée avec React et Vite constitue le "visage" de ton application de gestion de tickets. Elle communique avec une API FastAPI pour offrir une gestion fluide et en temps réel des demandes de support.
-Technologies utilisées
+Ce projet est une application **fullstack de gestion de tickets** développée dans un cadre pédagogique.  
+Il combine **traitement de données en Python**, **API REST avec FastAPI**, **frontend React**, et une **démarche réflexive d’apprentissage via l’usage d’un LLM**.
 
-    Framework : React (Hooks : useState, useEffect)
+L’objectif est de démontrer :
+- la manipulation de données structurées (JSON),
+- la conception d’une API REST fonctionnelle,
+- la connexion frontend ↔ backend,
+- et l’adoption de bonnes pratiques professionnelles (Git, documentation, esprit critique).
 
-    Outil de build : Vite
+---
 
-    Style : CSS3 personnalisé avec variables (Custom Properties)
+## 🧠 Contexte pédagogique
 
-    Communication : API Fetch (Requêtes asynchrones vers le backend)
+Projet réalisé dans le cadre d’un exercice de formation visant à :
+- automatiser un traitement simple de données en Python,
+- créer une API REST avec FastAPI,
+- connecter une interface frontend (React),
+- utiliser un LLM comme **outil d’assistance au développement**, avec analyse critique.
 
-## Fonctionnalités clés
+Travail réalisé en binôme (un développeur / un guide), avec alternance des rôles.
 
-    Tableau de bord de Statistiques : Visualisation immédiate du nombre total de tickets et répartition par statut (Open, In Progress, Closed).
+---
 
-    Création dynamique : Formulaire intuitif pour ajouter des tickets avec titre, description et niveau de priorité.
+## 🏗️ Architecture globale
 
-    Filtrage & Recherche : Moteur de recherche multicritère (Statut, Priorité, Titre) pour retrouver rapidement une information.
+L’application repose sur une architecture **découplée** :
 
-    Tri Intelligent : Logique de tri personnalisée respectant la priorité métier (High > Medium > Low) et le flux de travail (Open > In Progress > Closed).
+- **Backend** : API REST FastAPI  
+  - Gestion des tickets
+  - Validation des données
+  - Persistance via fichier JSON
+- **Frontend** : Application React (Vite)  
+  - Affichage dynamique des tickets
+  - Création et mise à jour du statut
+  - Règles métier côté interface
+- **Communication** : API REST (fetch HTTP)
 
-    Gestion du cycle de vie : Mise à jour instantanée du statut via des requêtes PATCH.
+---
 
-## Installation et Lancement
+## 📂 Structure du projet
 
-    Accéder au dossier :
-    PowerShell
+```plaintext
+.
+├── Backend/
+│   ├── main.py                # API FastAPI (routes, CORS, validation)
+│   ├── script.py              # Traitement de données & logique métier
+│   ├── structure_ticket.json  # Données persistées (≥ 10 tickets)
+│   └── README.md              # Documentation technique backend
+│
+├── Frontend/
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   └── README.md              # Documentation technique frontend
+│
+├── README.md                  # Documentation globale (ce fichier)
+└── LEARNING.md                # Apprentissage, usage du LLM et retours critiques
 
-    cd Frontend
+⚙️ Prérequis
 
-    Installer les dépendances :
-    PowerShell
+    Python ≥ 3.10
 
-    npm install
+    Node.js ≥ 18
 
-    Lancer le serveur de développement :
-    PowerShell
+    npm ≥ 9
 
-    npm run dev
+🚀 Installation et Lancement
+1️⃣ Backend (API FastAPI)
 
-    L'interface sera accessible par défaut sur http://localhost:5173.
+cd Backend
+pip install fastapi uvicorn pydantic
+python -m uvicorn main:app --reload
 
-## Règles Métier Implémentées
+Le serveur backend est accessible sur :
+👉 http://127.0.0.1:8000
 
-Le frontend applique des contrôles stricts pour garantir l'intégrité des données :
+👉 Documentation interactive Swagger : http://127.0.0.1:8000/docs
+2️⃣ Frontend (React)
 
-    Verrouillage des dossiers clos : Lorsqu'un ticket passe au statut Closed, le sélecteur de changement de statut est automatiquement désactivé (disabled) pour empêcher toute réouverture non autorisée.
+cd Frontend
+npm install
+npm run dev
 
-    Sémantique de suppression : Pour un ticket ouvert, le bouton affiche Supprimer. Pour un ticket clos, il se transforme en SOLDER, indiquant la finalisation administrative du dossier.
+L’interface utilisateur est accessible sur :
+👉 http://localhost:5173
+📡 API REST – Endpoints principaux
+Méthode	Route	Description
+GET	/tickets	Récupère tous les tickets
+POST	/tickets	Crée un nouveau ticket
+PATCH	/tickets/{id}	Met à jour le statut d’un ticket
+DELETE	/tickets/{id}	Supprime (ou solde) un ticket
 
-    Hiérarchie visuelle : Les cartes de tickets utilisent des codes couleurs basés sur la priorité et le statut pour une lecture rapide.
+La gestion des erreurs HTTP (404, 400, etc.) est implémentée côté backend.
+🖥️ Fonctionnalités principales
+Backend
 
-## Structure du projet
-Plaintext
+    Lecture et écriture d’un fichier JSON
 
-Frontend/
-├── src/
-│   ├── App.jsx     # Logique principale, calculs de tri et fetch API
-│   ├── App.css     # Design des composants, grille et cartes
-│   ├── main.jsx    # Point d'entrée React
-│   └── index.css   # Styles globaux et reset
-├── index.html      # Structure HTML de base
-└── package.json    # Dépendances et scripts
+    Calcul de statistiques par statut
 
-🌐 Configuration API
+    Filtrage et tri des tickets
 
-Par défaut, l'interface pointe vers l'adresse locale du backend : http://127.0.0.1:8000/tickets.
+    Ajout et mise à jour de tickets
+
+    Mode API + mode CLI (script.py)
+
+Frontend
+
+    Affichage dynamique des tickets
+
+    Création via formulaire
+
+    Mise à jour du statut
+
+    Filtrage et recherche multicritère
+
+    Tri métier (priorité et statut)
+
+    Règles UI empêchant la réouverture d’un ticket clos
+
+📘 Documentation technique détaillée
+
+Pour une description complète et approfondie de chaque composant :
+
+    🔧 Backend (FastAPI, logique métier, CLI)
+    → voir Backend/README.md
+
+    🎨 Frontend (React, règles métier UI, tri, filtres)
+    → voir Frontend/README.md
+
+🤖 Apprentissage & usage du LLM
+
+Un LLM a été utilisé comme outil d’assistance au développement pour :
+
+    générer des données de test,
+
+    clarifier des comportements techniques,
+
+    identifier et corriger des erreurs.
+
+L’ensemble de la démarche (prompts utilisés, erreurs rencontrées, vérifications, cas d’erreur du LLM) est documenté dans :
+
+👉 LEARNING.md
+🧪 Critères de validation couverts
+
+    API fonctionnelle et accessible
+
+    Frontend connecté au backend
+
+    Création, mise à jour et suppression de tickets
+
+    Code structuré et lisible
+
+    Documentation complète
+
+    Utilisation justifiée et critique d’un LLM
+
+    Utilisation cohérente de Git
+
+📄 Licence
+
+Projet réalisé dans un cadre pédagogique.
