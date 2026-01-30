@@ -1,8 +1,8 @@
-🎟️ Ticketing System - Frontend
-🚀 Présentation
+Ticketing System - Frontend
+Présentation
 
 Ce dépôt contient l'interface utilisateur (UI) du système de gestion de tickets. Développée avec React et Vite, cette application offre un tableau de bord moderne, fluide et réactif pour piloter les demandes de support technique en temps réel.
-🛠️ Technologies utilisées
+Technologies utilisées
 
     React 18 : Utilisation intensive des Hooks (useState, useEffect) pour une gestion d'état performante.
 
@@ -12,7 +12,7 @@ Ce dépôt contient l'interface utilisateur (UI) du système de gestion de ticke
 
     Fetch API : Communication asynchrone avec le backend FastAPI.
 
-✨ Fonctionnalités Avancées
+Fonctionnalités Avancées
 
     Système de Filtrage Cumulatif : Permet d'empiler plusieurs critères de recherche (ex: voir uniquement les tickets "High" ET "Open").
 
@@ -28,7 +28,7 @@ Ce dépôt contient l'interface utilisateur (UI) du système de gestion de ticke
 
         Action "SOLDER" : Le bouton de suppression change sémantiquement pour marquer la clôture définitive d'un dossier.
 
-📦 Installation et Lancement
+Installation et Lancement
 
     Cloner le dépôt :
     PowerShell
@@ -48,7 +48,7 @@ Ce dépôt contient l'interface utilisateur (UI) du système de gestion de ticke
 
     L'interface sera accessible par défaut sur http://localhost:5173/.
 
-📋 Configuration de l'API
+Configuration de l'API
 
 Le Frontend est configuré pour interagir avec un backend FastAPI tournant sur le port 8000.
 
@@ -56,11 +56,12 @@ Le Frontend est configuré pour interagir avec un backend FastAPI tournant sur l
 
     Endpoints utilisés : GET, POST, PATCH (mise à jour statut), DELETE.
 
-📂 Structure des fichiers
+Structure des fichiers
 Plaintext
 
 src/
 ├── App.jsx     # Logique métier, gestion des filtres cumulatifs et du tri
 ├── App.css     # Styles des composants, animations et grille responsive
 ├── main.jsx    # Point d'entrée de l'application React
+
 └── index.css   # Styles globaux et variables de thème
