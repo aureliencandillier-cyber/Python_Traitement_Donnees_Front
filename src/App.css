@@ -37,13 +37,23 @@
   gap: 30px;
 }
 
-/* ✅ AJOUT : sidebar “outil” (pas trop large) */
+/* Sidebar “outil” */
 .sidebar {
   flex: 0 0 260px;
   max-width: 260px;
 }
 
-/* ✅ AJOUT : sur écrans moyens/petits, on empile (UX bien meilleure) */
+.sidebar h2 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+/* Zone tickets prend le reste */
+.ticket-display {
+  flex: 1;
+}
+
+/* Responsive layout */
 @media (max-width: 900px) {
   .main-layout {
     flex-direction: column;
@@ -56,26 +66,19 @@
   }
 }
 
-.sidebar h2 {
-  font-size: 1.05rem;
-  margin-bottom: 10px;
-}
-
-/* ✅ CORRECTION : la zone tickets prend le reste */
-.ticket-display {
-  flex: 1;
-}
-
 /* Forms & Controls */
-.form-container, .controls {
+.form-container,
+.controls {
   background: var(--card-bg);
-  padding: 16px;              /* un peu plus compact */
+  padding: 16px;
   border-radius: 10px;
-  margin-bottom: 14px;        /* réduit l’empilement */
+  margin-bottom: 14px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
   margin: 10px 0;
   padding: 10px;
@@ -94,15 +97,22 @@ input, textarea, select {
   border-radius: 5px;
 }
 
-/* ✅ Bouton danger “outline” (moins dominant, plus pro) */
+/* Danger “outline” */
 .btn-danger {
   background: transparent;
   color: var(--danger);
   border: 1px solid var(--danger);
-  padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
   font-weight: bold;
+
+  height: var(--control-height);
+  padding: 0 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .btn-danger:hover {
@@ -144,15 +154,16 @@ input, textarea, select {
 .status-pill.in-progress { background: #fff3cd; color: #856404; }
 .status-pill.closed { background: #d4edda; color: #155724; }
 
-.card-actions {
-  margin-top: 15px;
+/* Header carte */
+.card-header {
   display: flex;
-  gap: 10px;
-  border-top: 1px solid #eee;
-  padding-top: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 5px;
 }
 
-/* Badges de priorité dans le header de la carte */
+/* Badges priorité */
 .priority-tag {
   font-size: 0.7em;
   font-weight: bold;
@@ -165,37 +176,34 @@ input, textarea, select {
 .priority-tag.medium { background-color: #fff4e5; color: #e67e22; }
 .priority-tag.low { background-color: #e5f9e5; color: #27ae60; }
 
-/* Header carte */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  gap: 5px;
-}
-
-/* Style spécifique pour le bouton Solder */
+/* Solder */
 .btn-solder {
   background-color: #2c3e50;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
   cursor: pointer;
+  border-radius: 5px;
   font-weight: bold;
+
+  height: var(--control-height);
+  padding: 0 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .btn-solder:hover {
   background-color: #34495e;
 }
 
-/* Optionnel : rendre la carte un peu plus terne quand elle est close */
 .card-closed {
   opacity: 0.8;
   background-color: #fcfcfc;
 }
 
-/* Zone des filtres actifs */
+/* Zone filtres actifs */
 .active-filters-area {
   background: white;
   padding: 15px;
@@ -267,25 +275,22 @@ input, textarea, select {
   align-items: center;
   gap: 8px;
   margin-bottom: 15px;
-  flex-wrap: nowrap; /* desktop: une ligne */
+  flex-wrap: nowrap;
 }
 
-/* même hauteur */
 .filter-builder select,
 .filter-builder input,
 .btn-add-filter {
   height: var(--control-height);
 }
 
-/* anti-débordement : autorise les selects à vraiment rétrécir en flex */
 .filter-builder select,
 .filter-builder input {
-  width: auto;     /* override du width:100% global */
-  flex: 1 1 0;     /* partage l’espace restant */
-  min-width: 0;    /* clé anti-débordement */
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
-/* bouton carré */
 .btn-add-filter {
   background: var(--primary);
   color: white;
@@ -295,14 +300,13 @@ input, textarea, select {
   font-weight: bold;
   font-size: 1.2rem;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   width: var(--control-height);
   padding: 0;
   flex: 0 0 var(--control-height);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
 
@@ -315,15 +319,6 @@ input, textarea, select {
   cursor: not-allowed;
 }
 
-/* Tri */
-.sort-box {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 15px;
-}
-
-/* Mobile : on empile le builder pour confort */
 @media (max-width: 420px) {
   .filter-builder {
     flex-direction: column;
@@ -340,6 +335,14 @@ input, textarea, select {
     width: 100%;
     flex: 0 0 auto;
   }
+}
+
+/* Tri */
+.sort-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 /* Harmonisation titres */
@@ -360,60 +363,121 @@ h3 {
 }
 
 /* -------------------------------------------------
-   ALIGNEMENT DES ACTIONS DANS LES CARTES
-------------------------------------------------- */
-
-.card-actions select,
-.card-actions .btn-danger,
-.card-actions .btn-solder {
-  height: var(--control-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Ajustement spécifique pour les selects (évite qu'ils débordent) */
-.card-actions select {
-  padding: 0 10px;
-}
-
-/* Ajustement spécifique pour les boutons */
-.card-actions .btn-danger,
-.card-actions .btn-solder {
-  padding: 0 12px;
-  white-space: nowrap;
-}
-
-/* -------------------------------------------------
-   ALIGNEMENT PRO DES ACTIONS DANS LES CARTES
+   ACTIONS DANS LES CARTES (select + ✏️ + supprimer)
 ------------------------------------------------- */
 
 .card-actions {
   margin-top: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* équilibre visuel */
-  gap: 12px;
+  gap: 10px;
   border-top: 1px solid #eee;
   padding-top: 12px;
 }
 
-/* Le select de statut : largeur maîtrisée */
+/* Le select doit pouvoir rétrécir (anti-débordement) */
 .card-actions select {
   height: var(--control-height);
-  width: 120px;          /* largeur fixe et lisible */
   padding: 0 10px;
-  flex: 0 0 120px;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
-/* Boutons d’action */
-.card-actions .btn-danger,
-.card-actions .btn-solder {
-  height: var(--control-height);
-  padding: 0 14px;
+/* Groupe à droite */
+.card-actions-right {
   display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+/* Bouton crayon */
+.btn-icon {
+  height: var(--control-height);
+  width: var(--control-height);
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  filter: brightness(0.97);
+}
+
+.btn-icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Anti-débordement du bouton Supprimer/SOLDER quand la carte est étroite */
+.card-actions-right .btn-danger,
+.card-actions-right .btn-solder {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------
+   MODE ÉDITION
+------------------------------------------------- */
+
+.btn-secondary {
+  height: var(--control-height);
+  padding: 0 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
 }
 
+.btn-ghost {
+  height: var(--control-height);
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.btn-ghost:hover {
+  filter: brightness(0.97);
+}
+
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.edit-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.edit-error {
+  margin: 6px 0 0;
+  color: var(--danger);
+  font-size: 0.9em;
+}
